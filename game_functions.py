@@ -1,13 +1,13 @@
 import pygame
 import settings
-from ball import Ball
 
 
-def check_events():
+def check_events(game_objects):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return True
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            game_objects.handle_mouse_event(event)
             print('Click!')
     return False
 

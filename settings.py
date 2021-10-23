@@ -1,4 +1,5 @@
 import colors
+import pathlib
 
 
 # Screen Settings
@@ -9,10 +10,11 @@ bg_color = colors.BLACK
 max_moving_items = 7
 
 # Ball Settings
-min_radius = 20
+min_radius = 100
 max_radius = 100
 min_speed = 1   # не нужно
-max_speed = 15
+max_speed = 1
+pop_sound = pathlib.Path("assets", "pop.mp3")
 
 # Ring Settings
 inner_radius_quotient = 0.4

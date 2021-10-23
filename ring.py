@@ -52,8 +52,8 @@ class Ring(Ball):
         pygame.draw.circle(self.screen, settings.bg_color,
                             (self.x, self.y), self.inner_radius)
 
-    def is_hit(self):
-        pass
+    def is_hit(self, hit_pos):
+        return self.inner_radius <= self._dist(hit_pos) <= self.radius
 
     def __process_wall_collisions(self):
         if self.x <= self.radius:

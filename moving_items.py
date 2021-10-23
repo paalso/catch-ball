@@ -1,7 +1,6 @@
 import random
 import pygame
 
-
 import settings
 from game_group_object import GameGroupObject
 from ball import Ball
@@ -30,3 +29,14 @@ class MovingItems(GameGroupObject):
     def update(self):
         random.shuffle(self.items)
         super().update()
+
+    def handle_mouse_event(self, event):
+        if event.type != pygame.MOUSEBUTTONDOWN:
+            return
+        print(event.pos)
+
+        for item in self.items:
+            if item.is_hit(event.pos):
+                self.items.remove(item)
+                pygame.mixer.Sound(settings.pop_sound).play()
+                del(item)

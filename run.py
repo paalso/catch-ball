@@ -19,15 +19,13 @@ def main():
     pygame.display.update()
     clock = pygame.time.Clock()
     finished = False
-    game_objects = []
+##    game_objects = []
 
-    ball = Ball(screen)
-    ball = Ring(screen)
     moving_items = MovingItems(screen)
 
     while not finished:
         clock.tick(FPS)
-        finished = gf.check_events()
+        finished = gf.check_events(moving_items)
         gf.update_screen(screen, moving_items)
 
     pygame.quit()
