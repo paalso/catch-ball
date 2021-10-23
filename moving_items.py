@@ -6,7 +6,7 @@ from game_group_object import GameGroupObject
 from ball import Ball
 from ring import Ring
 
-SPECIES = ["Ball", "Sort"]
+SPECIES = ["Ball", "Ring"]
 
 class MovingItems(GameGroupObject):
 
@@ -17,14 +17,12 @@ class MovingItems(GameGroupObject):
 
     def create_items(self):
         for _ in range(settings.max_moving_items):
-            class_name = self.choose_items_class()
-            item = Ball(self.screen) if class_name == "Ball" else Ring(self.screen)
-            self.add(item)
+            class_ = self.choose_items_class()
+            self.add(class_(self.screen))
 
     def choose_items_class(self):
-        return random.choice(SPECIES)
-##        class_name = random.choice(SPECIES)
-##        return globals()[class_name]()
+        class_name = random.choice(SPECIES)
+        return globals()[class_name]
 
     def update(self):
         random.shuffle(self.items)
@@ -33,7 +31,7 @@ class MovingItems(GameGroupObject):
     def handle_mouse_event(self, event):
         if event.type != pygame.MOUSEBUTTONDOWN:
             return
-        print(event.pos)
+##        print(event.pos)
 
         for item in self.items:
             if item.is_hit(event.pos):

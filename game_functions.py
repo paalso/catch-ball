@@ -4,7 +4,8 @@ import settings
 
 def check_events(game_objects):
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or \
+            event.type == pygame.KEYDOWN and event.key == pygame.K_q:
             return True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             game_objects.handle_mouse_event(event)
