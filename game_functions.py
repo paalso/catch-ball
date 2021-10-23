@@ -12,8 +12,8 @@ def check_events():
     return False
 
 
-def update_screen(screen, item):
+def update_screen(screen, items):
     pygame.display.update()
     screen.fill(settings.bg_color)
-    item.update()
-    item.draw()
+    items.update()
+    items.draw()

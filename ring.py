@@ -14,20 +14,37 @@ def sgn(x):
     return 0
 
 
+def non_zeroize(x):
+    return 1 if x == 0 else x
+
+
+def stochasticize_speed(x, dx, min_x, max_x):
+    x += dx + random.random()
+    x = max(x, min_x)
+    x = min(x, max_x)
+    return x
+
+
 class Ring(Ball):
     def __init__(self, screen):
         super().__init__(screen)
         self.radius = random.randint(settings.min_radius, settings.max_radius)
         self.inner_radius = round(self.radius * settings.inner_radius_quotient)
+        self.frames_counter = 0
         # self.point = self._calculate_point()
 
     def __str__(self):
         return "Ring: {}, {}".format(self.radius, self.point)
 
     def update(self):
+        self.frames_counter += 1
         self.__process_wall_collisions()
         self.x += self.speed_x
         self.y += self.speed_y
+
+        if self.frames_counter == settings.speed_change_frames:
+            self.frames_counter = 0
+            self.__randomize_speed()
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color,
@@ -35,7 +52,7 @@ class Ring(Ball):
         pygame.draw.circle(self.screen, settings.bg_color,
                             (self.x, self.y), self.inner_radius)
 
-    def hit(self):
+    def is_hit(self):
         pass
 
     def __process_wall_collisions(self):
@@ -53,20 +70,24 @@ class Ring(Ball):
             self.y = settings.screen_height - self.radius
 
         self._update_point()
-        print(self.speed_x, self.speed_y, self.point)
+##        print(self.speed_x, self.speed_y, self.point)
 
     def _update_point(self):
-        self._update_speed()
+        self._recalculate_speed()
         self.point = round((settings.max_radius / self.radius) ** 2 + \
                     (self.speed / settings.min_speed) ** 0.5)
 
+    def __randomize_speed(self):
+        self.speed_x = self._generate_random_speed()
+        self.speed_y = self._generate_random_speed()
+
     def __inverse_speed_x(self):
-        self.speed_x = -abs(self._generate_random_speed()) * sgn(self.speed_x)
+        self.speed_x = -abs(self._generate_random_speed()) * non_zeroize(sgn(self.speed_x))
         self.speed_y = self.speed_x = self._generate_random_speed()
 
     def __inverse_speed_y(self):
         self.speed_x = self._generate_random_speed()
-        self.speed_y = -abs(self._generate_random_speed()) * sgn(self.speed_y)
+        self.speed_y = -abs(self._generate_random_speed()) * non_zeroize(sgn(self.speed_y))
 
 
     # НУЖЕН ЛИ?

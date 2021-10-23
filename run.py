@@ -5,7 +5,7 @@ import settings
 import colors
 from ball import Ball
 from ring import Ring
-##from moving_items import MovingItems
+from moving_items import MovingItems
 
 
 def main():
@@ -23,12 +23,12 @@ def main():
 
     ball = Ball(screen)
     ball = Ring(screen)
-##    moving_items = MovingItems(screen)
+    moving_items = MovingItems(screen)
 
     while not finished:
         clock.tick(FPS)
         finished = gf.check_events()
-        gf.update_screen(screen, ball)
+        gf.update_screen(screen, moving_items)
 
     pygame.quit()
     print("Good bye!")

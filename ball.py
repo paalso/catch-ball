@@ -5,8 +5,10 @@ import settings
 import colors
 
 
+# class Ball(pygame.sprite.Sprite):
 class Ball():
     def __init__(self, screen):
+        super().__init__()
         self.screen = screen
         self.radius = random.randint(settings.min_radius, settings.max_radius)
         self.x = random.randint(
@@ -32,7 +34,7 @@ class Ball():
         pygame.draw.circle(self.screen, self.color,
                             (self.x, self.y), self.radius)
 
-    def hit(self):
+    def is_hit(self):
         pass
 
     def _generate_random_speed(self):
@@ -42,7 +44,7 @@ class Ball():
         self.point = round((settings.max_radius / self.radius) ** 2 + \
                     (self.speed / settings.min_speed) ** 0.5)
 
-    def _update_speed(self):
+    def _recalculate_speed(self):
         self.speed = (self.speed_x ** 2 + self.speed_y ** 2) ** 0.5
 
     def __process_wall_collisions(self):
