@@ -3,7 +3,7 @@ import random
 import pathlib
 
 import settings
-import colors
+import basic_classes.colors as colors
 
 
 class Ball():

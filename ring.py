@@ -1,8 +1,8 @@
 import pygame
 import random
 
+import basic_classes.colors as colors
 import settings
-import colors
 from ball import Ball
 
 
@@ -39,8 +39,14 @@ class Ring(Ball):
     def update(self):
         self.frames_counter += 1
         self.__process_wall_collisions()
+
         self.x += self.speed_x
         self.y += self.speed_y
+
+        self.speed_x += random.randint(-settings.frame_speed_stochastic_change,
+                                        settings.frame_speed_stochastic_change)
+        self.speed_y += random.randint(-settings.frame_speed_stochastic_change,
+                                        settings.frame_speed_stochastic_change)
 
         if self.frames_counter == settings.speed_change_frames:
             self.frames_counter = 0
@@ -82,30 +88,12 @@ class Ring(Ball):
         self.speed_y = self._generate_random_speed()
 
     def __inverse_speed_x(self):
-        self.speed_x = -abs(self._generate_random_speed()) * non_zeroize(sgn(self.speed_x))
+        self.speed_x = -abs(self._generate_random_speed()) * \
+                        non_zeroize(sgn(self.speed_x))
         self.speed_y = self.speed_x = self._generate_random_speed()
 
     def __inverse_speed_y(self):
         self.speed_x = self._generate_random_speed()
-        self.speed_y = -abs(self._generate_random_speed()) * non_zeroize(sgn(self.speed_y))
+        self.speed_y = -abs(self._generate_random_speed()) * \
+                        non_zeroize(sgn(self.speed_y))
 
-
-    # НУЖЕН ЛИ?
-##    def __calculate_speed(self):
-##        return (self.speed_x ** 2 + self.speed_y ** 2) ** 0.5
-
-##    def __inverse_speed_x(self):
-##        self.speed_x = -self.speed_x + self.__random_speed_biase()
-##        self.speed_y = self.speed_y + self.__random_speed_biase()
-##
-##    def __inverse_speed_y(self):
-##        self.speed_x = self.speed_x + self.__random_speed_biase()
-##        self.speed_y = -self.speed_y + self.__random_speed_biase()
-
-##    def __random_sign(self):
-##        return random.choice((-1, 0, 1))
-##
-##    def __random_speed_biase(self):
-##        return self.__random_sign() * random.randint(
-##                settings.wall_reflection_speed_min_biase,
-##                settings.wall_reflection_speed_max_biase)

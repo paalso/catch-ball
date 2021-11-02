@@ -31,5 +31,3 @@ class GameGroupObject:
     def draw(self):
         for e in self.items:
             e.draw()
-
-

@@ -2,7 +2,7 @@ import random
 import pygame
 
 import settings
-from game_group_object import GameGroupObject
+from basic_classes.game_group_object import GameGroupObject
 from ball import Ball
 from ring import Ring
 
