@@ -2,12 +2,14 @@ import pygame
 
 
 class TextObject:
-    def __init__(self, x, y, text, color, font_name, font_size):
+    def __init__(self, x, y, text, color, font_size, font_name=None):
+        """x, y: reference coordinates,
+        Creates an instance of the TextObject
+        """
         self.pos = x, y
         self.text = text
         self.color = color
-        # self.font = pygame.font.SysFont(font_name, font_size)
-        self.font = pygame.font.Font(font_name, font_size)
+        self.font = pygame.font.SysFont(font_name, font_size)
         self.surface, self.rect = self.get_surface(text)
         self.rect.topleft = self.pos
 
@@ -23,6 +25,3 @@ class TextObject:
     def get_surface(self, text):
         text_surface = self.font.render(text, True, self.color)
         return text_surface, text_surface.get_rect()
-
-    def update(self):
-        pass

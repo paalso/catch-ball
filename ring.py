@@ -34,7 +34,7 @@ class Ring(Ball):
         # self.point = self._calculate_point()
 
     def __str__(self):
-        return "Ring: {}, {}".format(self.radius, self.point)
+        return "Ring: {}, {}".format(self.radius, self.points)
 
     def update(self):
         self.frames_counter += 1
@@ -51,6 +51,8 @@ class Ring(Ball):
         if self.frames_counter == settings.speed_change_frames:
             self.frames_counter = 0
             self.__randomize_speed()
+
+        self._update_points()
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color,
@@ -75,12 +77,11 @@ class Ring(Ball):
             self.__inverse_speed_y()
             self.y = settings.screen_height - self.radius
 
-        self._update_point()
-##        print(self.speed_x, self.speed_y, self.point)
+        self._update_points()
 
-    def _update_point(self):
+    def _update_points(self):
         self._recalculate_speed()
-        self.point = round((settings.max_radius / self.radius) ** 2 + \
+        self.points = round((settings.max_radius / self.radius) ** 2 + \
                     (self.speed / settings.min_speed) ** 0.5)
 
     def __randomize_speed(self):

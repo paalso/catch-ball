@@ -1,9 +1,11 @@
 import pygame
 
 import basic_classes.colors as colors
+from basic_classes.text_object import TextObject
 import settings
 from ball import Ball
 from ring import Ring
+from info_panel import InfoPanel
 from moving_items import MovingItems
 
 
@@ -17,9 +19,10 @@ class CatchBall():
         self.clock = pygame.time.Clock()
 
         self.moving_items = MovingItems(self.screen)
+        self.info_panel = InfoPanel(self.screen, self)
+##        self.text = TextObject(0, 0, "Hello!", colors.CYAN, 60)
 
     def run(self):
-##        pygame.display.update()
         finished = False
 
         while not finished:
@@ -37,12 +40,14 @@ class CatchBall():
                 return True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.moving_items.handle_mouse_event(event)
-                print('Click!')
         return False
 
     def __update_screen(self, items):
         pygame.display.update()
 
         self.screen.fill(settings.bg_color)
+        # self.text.draw(self.screen, centralized=True)
+        self.info_panel.update()
         self.moving_items.update()
         self.moving_items.draw()
+        self.info_panel.draw()

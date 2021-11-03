@@ -13,7 +13,14 @@ class MovingItems(GameGroupObject):
     def __init__(self, screen):
         super().__init__(screen)
         self.frames_counter = 0
+        self.clicks = 0
+        self.cought = 0
+        self.score = 0
         self.__create_items_set()
+
+    @property
+    def left_items(self):
+        return len(self.items)
 
     def update(self):
         self.frames_counter += 1
@@ -25,10 +32,14 @@ class MovingItems(GameGroupObject):
             self.__add_new_item()
 
     def handle_mouse_event(self, event):
+        self.clicks += 1
         if event.type != pygame.MOUSEBUTTONDOWN:
             return
         for item in self.items:
             if item.is_hit(event.pos):
+                self.score += item.points
+                self.cought += 1
+                print(item, "Total points: ", self.score)
                 self.items.remove(item)
                 pygame.mixer.Sound(settings.pop_sound).play()
                 del(item)

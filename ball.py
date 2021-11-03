@@ -19,10 +19,10 @@ class Ball():
         self.speed_y = self._generate_random_speed()
         self.speed = (self.speed_x ** 2 + self.speed_y ** 2) ** 0.5
         self.color = random.choice(colors.COLORS)
-        self._update_point()
+        self._update_points()
 
     def __str__(self):
-        return "Ball: {}, {}".format(self.radius, self.point)
+        return "Ball: {}, {}".format(self.radius, self.points)
 
     def update(self):
         self.__process_wall_collisions()
@@ -39,8 +39,8 @@ class Ball():
     def _generate_random_speed(self):
         return random.randint(-settings.max_speed, settings.max_speed)
 
-    def _update_point(self):
-        self.point = round((settings.max_radius / self.radius) ** 2 + \
+    def _update_points(self):
+        self.points = round((settings.max_radius / self.radius) ** 2 + \
                     (self.speed / settings.min_speed) ** 0.5)
 
     def _recalculate_speed(self):
