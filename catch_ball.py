@@ -10,7 +10,9 @@ from moving_items import MovingItems
 
 
 class CatchBall():
-    def __init__(self):
+    def __init__(self, player_name=None):
+        self.player_name = player_name
+        print(player_name)
         pygame.init()
         pygame.display.set_caption("Catch balls!")
         self.frame_rate = settings.FPS
@@ -20,7 +22,6 @@ class CatchBall():
 
         self.moving_items = MovingItems(self.screen)
         self.info_panel = InfoPanel(self.screen, self)
-##        self.text = TextObject(0, 0, "Hello!", colors.CYAN, 60)
 
     def run(self):
         finished = False

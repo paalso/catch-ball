@@ -6,7 +6,7 @@ from basic_classes.game_rect_object import GameRectObject
 from basic_classes.text_object import TextObject
 
 EMPTY_COLOR = (0, 0, 0)
-text_sector_start = 0.50
+text_sector_start = 0.40
 text_sector_len = 1 - text_sector_start
 
 class InfoPanel(GameRectObject):   # GameObject ?
@@ -52,19 +52,19 @@ class InfoPanel(GameRectObject):   # GameObject ?
     def __set_cought_info(self):
         self.__set_text_info(
                 "Cought  {}".format(self.cought),
-                (text_sector_start + 0.33 * text_sector_len) * self.width,
+                (text_sector_start + 0.30 * text_sector_len) * self.width,
                 settings.padding, settings.info_text_size)
 
     def __set_left_info(self):
         self.__set_text_info(
-                "Left  {}".format(self.left_items),
-                (text_sector_start + 0.66 * text_sector_len) * self.width,
+                "Targets left  {}".format(self.left_items),
+                (text_sector_start + 0.60 * text_sector_len) * self.width,
                 settings.padding, settings.info_text_size)
 
     def __set_score_info(self):
         self.__set_text_info(
                 "Score  {}".format(self.score),
-                (text_sector_start + 0.66 * text_sector_len) * self.width,
+                (text_sector_start + 0.60 * text_sector_len) * self.width,
                 settings.padding + settings.info_text_size,
                 int(1.25 * settings.info_text_size), colors.ORANGE)
 

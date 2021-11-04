@@ -3,7 +3,8 @@ import basic_classes.colors as colors
 
 # Screen Settings
 FPS = 30
-screen_width, screen_height = 900, 600
+screen_width, screen_height = 1200, 900
+menu_width, menu_height = 400, 300
 bg_color = colors.DARK_GREY
 info_text_color = colors.AZURE
 info_text_size = int(0.05 * screen_height)
