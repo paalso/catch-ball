@@ -10,17 +10,11 @@ SPECIES = ["Ball", "Ring"]
 
 class MovingItems(GameGroupObject):
 
-    def __init__(self, screen):
+    def __init__(self, screen, game_stats):
         super().__init__(screen)
+        self.stats = game_stats
         self.frames_counter = 0
-        self.clicks = 0
-        self.cought = 0
-        self.score = 0
         self.__create_items_set()
-
-    @property
-    def left_items(self):
-        return len(self.items)
 
     def update(self):
         self.frames_counter += 1
@@ -32,17 +26,17 @@ class MovingItems(GameGroupObject):
             self.__add_new_item()
 
     def handle_mouse_event(self, event):
-        self.clicks += 1
+        self.stats.inc_clicks()
         if event.type != pygame.MOUSEBUTTONDOWN:
             return
         for item in self.items:
             if item.is_hit(event.pos):
-                self.score += item.points
-                self.cought += 1
-                print(item, "Total points: ", self.score)
                 self.items.remove(item)
+                self.stats.upd_items_left(-1)
+                self.stats.inc_score(item.points)
+                self.stats.inc_cought()
                 pygame.mixer.Sound(settings.pop_sound).play()
-                del(item)
+                del(item)       # ?
 
     def __create_items_set(self):
         for _ in range(settings.start_moving_items):
@@ -52,6 +46,7 @@ class MovingItems(GameGroupObject):
         if len(self.items) < settings.max_moving_items:
             class_ = self.__choose_items_class()
             self.add(class_(self.screen))
+        self.stats.upd_items_left(1)
 
     def __choose_items_class(self):
         class_name = random.choice(SPECIES)

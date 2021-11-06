@@ -3,15 +3,36 @@ import basic_classes.colors as colors
 
 # Screen Settings
 FPS = 30
-screen_width, screen_height = 1200, 900
+screen_width, screen_height = 999, 800
 menu_width, menu_height = 400, 300
 bg_color = colors.DARK_GREY
 info_text_color = colors.AZURE
 info_text_size = int(0.05 * screen_height)
 padding = 20
+final_img = {
+    "win": pathlib.Path("assets", "win.jpg"),
+    "fail": pathlib.Path("assets", "fail.jpg"),
+}
+final_msg = {
+    "win":
+        "You've won!\n" + \
+        "Your final score is {}\n" + \
+        "You are awesome!",
+    "fail":
+        "You've failed!\n" + \
+        "Your final score is {}\n" + \
+        "Goodbye, loser!",
 
-start_moving_items = 10
+}
+msg_font = None
+msg_size = int(0.07 * screen_height)
+msg_color = colors.BROWN
+
+# Game Settings
+game_duration = 5  # in seconds
+start_moving_items = 2
 max_moving_items = 200
+finish_early_bonus_quotient = 1.2
 
 # Ball Settings
 min_radius = 20
