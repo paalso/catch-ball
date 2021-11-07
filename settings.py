@@ -9,11 +9,15 @@ bg_color = colors.DARK_GREY
 info_text_color = colors.AZURE
 info_text_size = int(0.05 * screen_height)
 padding = 20
-final_img = {
+endgame_imgs = {
     "win": pathlib.Path("assets", "win.jpg"),
     "fail": pathlib.Path("assets", "fail.jpg"),
 }
-final_msg = {
+endgame_sounds = {
+    "win": pathlib.Path("assets", "win.mp3"),
+    "fail": pathlib.Path("assets", "fail.mp3"),
+}
+endgame_msgs = {
     "win":
         "You've won!\n" + \
         "Your final score is {}\n" + \
@@ -24,13 +28,16 @@ final_msg = {
         "Goodbye, loser!",
 
 }
-msg_font = None
-msg_size = int(0.07 * screen_height)
-msg_color = colors.BROWN
+endgame_delay = 8000    # in milliseconds
+# msg_font = None
+endgame_msg_position = \
+        0.08 * screen_width, 0.1 * screen_height,
+endgame_msg_size = int(0.07 * screen_height)
+endgame_msg_color = colors.BROWN
 
 # Game Settings
-game_duration = 60  # in seconds
-start_moving_items = 10
+game_duration = 10  # in seconds
+start_moving_items = 3
 max_moving_items = 200
 finish_early_bonus_quotient = 1.2
 
@@ -50,7 +57,6 @@ wall_reflection_speed_min_biase = 1
 wall_reflection_speed_max_biase = 7
 point_increasing_quotient = 1.2
 frame_speed_stochastic_change = 2
-##speed_stochastic_quotient = 5
 
 _speed_change_interval = 2   # in seconds
 speed_change_frames = _speed_change_interval * FPS  # in frames

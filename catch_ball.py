@@ -73,30 +73,19 @@ class CatchBall():
     def __endgame(self, game_result):
         pygame.time.delay(500)
         final_img = pygame.transform.scale(
-            pygame.image.load(settings.final_img[game_result]),
+            pygame.image.load(settings.endgame_imgs[game_result]),
             (settings.screen_width, settings.screen_height))
         self.screen.blit(final_img, (0, 0))
-        goodbye_msg = settings.final_msg[game_result].format(self.stats.final_score)
+        pygame.mixer.Sound(settings.endgame_sounds[game_result]).play()
+        goodbye_msg = settings.endgame_msgs[game_result].format(
+                                                        self.stats.final_score)
         print(goodbye_msg)
-        Text(self.screen, goodbye_msg,
-            0.1 * settings.screen_width, 0.1 * settings.screen_height,
-            settings.msg_color, settings.msg_size).draw()
+        Text(self.screen, goodbye_msg, *settings.endgame_msg_position,
+                settings.endgame_msg_color, settings.endgame_msg_size).draw()
         pygame.display.update()
-        pygame.time.delay(10000)
+        pygame.time.delay(settings.endgame_delay)
         self.__exit_game()
 
     def __exit_game(self):
         pygame.quit()
         sys.exit()
-
-
-    def __set_message(self, text, x, y):
-
-        position = x, y
-
-        popup = Popup(self.screen, *position, text, colors.RED, None,
-            font_name=settings.msg_text_font,
-            font_size=settings.msg_text_size,
-            transparent=True, centralized=False)
-        popup.draw()
-        print(text)
