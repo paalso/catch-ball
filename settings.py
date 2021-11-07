@@ -29,8 +29,8 @@ msg_size = int(0.07 * screen_height)
 msg_color = colors.BROWN
 
 # Game Settings
-game_duration = 5  # in seconds
-start_moving_items = 2
+game_duration = 60  # in seconds
+start_moving_items = 10
 max_moving_items = 200
 finish_early_bonus_quotient = 1.2
 

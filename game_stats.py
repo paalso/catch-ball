@@ -12,8 +12,6 @@ class GameStats:
         self.start_ticks = pygame.time.get_ticks()
         self.current_ticks = self.start_ticks
 
-##        self.current_ticks = self.start_ticks
-
     @property
     def seconds_left(self):
         self.seconds_passed = (self.current_ticks - self.start_ticks) // 1000

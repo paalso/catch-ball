@@ -13,9 +13,11 @@ from game_stats import GameStats
 
 
 class CatchBall():
-    def __init__(self, player_name=None):
+    def __init__(self, player_name):
+        if not player_name:
+            player_name = None
         self.player_name = player_name
-        print(player_name)
+        print(f"Hello, {self.player_name}")
         pygame.init()
         pygame.display.set_caption("Catch balls!")
         self.frame_rate = settings.FPS
