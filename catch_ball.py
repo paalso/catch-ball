@@ -15,9 +15,9 @@ from game_stats import GameStats
 class CatchBall():
     def __init__(self, player_name):
         if not player_name:
-            player_name = None
+            player_name = "Anonymous"
         self.player_name = player_name
-        print(f"Hello, {self.player_name}")
+        print(f"\nHello, {self.player_name}!\n")
         pygame.init()
         pygame.display.set_caption("Catch balls!")
         self.frame_rate = settings.FPS
@@ -30,6 +30,7 @@ class CatchBall():
         self.info_panel = InfoPanel(self.screen, self.stats)
 
         self.depicted_objects = [self.moving_items, self.info_panel]
+        self.game_off = False
 
     def run(self):
 
@@ -44,48 +45,51 @@ class CatchBall():
     def __check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
-                event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                self.__exit_game()
+                    event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    self.__exit_game()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.moving_items.handle_mouse_event(event)
         return False
 
     def __update_screen(self, items):
         pygame.display.update()
-
         self.screen.fill(settings.bg_color)
-
         self.stats.upd_ticks()
 
-        # Рефакторить!
+        if self.game_off:
+            Text(self.screen, self.stats.get_results_records(),
+                 *settings.endgame_msg_position,
+                 settings.endgame_msg_color,
+                 settings.results_records_fontsize, "couriernew").draw()
+            return
+
         if self.stats.items_left == 0:
             self.__endgame("win")
-
         if self.stats.seconds_left < 0:
             self.__endgame("fail")
 
         for o in self.depicted_objects:
             o.update()
-
         for o in self.depicted_objects:
             o.draw()
 
     def __endgame(self, game_result):
+        self.game_off = True
         pygame.time.delay(500)
         final_img = pygame.transform.scale(
             pygame.image.load(settings.endgame_imgs[game_result]),
             (settings.screen_width, settings.screen_height))
         self.screen.blit(final_img, (0, 0))
         pygame.mixer.Sound(settings.endgame_sounds[game_result]).play()
-        goodbye_msg = settings.endgame_msgs[game_result].format(
-                                                        self.stats.final_score)
-        print(goodbye_msg)
+        goodbye_msg = settings.endgame_msgs[game_result] \
+            .format(self.player_name, self.stats.final_score)
+        print("\n{}\n".format(goodbye_msg))
         Text(self.screen, goodbye_msg, *settings.endgame_msg_position,
-                settings.endgame_msg_color, settings.endgame_msg_size).draw()
+             settings.endgame_msg_color,
+             settings.endgame_msg_fontsize).draw()
         self.stats.upd_game_results_records()
         pygame.display.update()
         pygame.time.wait(settings.endgame_delay)
-        self.__exit_game()
 
     def __exit_game(self):
         pygame.quit()

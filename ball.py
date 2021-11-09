@@ -28,7 +28,7 @@ class Ball():
         self.speed = (self.speed_x ** 2 + self.speed_y ** 2) ** 0.5
         self.color = random.choice(colors.COLORS)
         self.area_points = round(
-                Ball.maximum_area / self._area() + \
+                Ball.maximum_area / self._area() +
                 (self.speed / settings.min_speed))
         self.points = self.area_points
 
@@ -43,10 +43,10 @@ class Ball():
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color,
-                            (self.x, self.y), self.radius)
+                           (self.x, self.y), self.radius)
 
     def is_hit(self, hit_pos):
-        return  self._dist(hit_pos) <= self.radius
+        return self._dist(hit_pos) <= self.radius
 
     def _generate_random_speed(self):
         return random.randint(-settings.max_speed, settings.max_speed)
@@ -63,9 +63,9 @@ class Ball():
 
     def __process_wall_collisions(self):
         if self.x <= self.radius or \
-            self.x + self.radius >= settings.screen_width:
-            self.speed_x = -self.speed_x
+                self.x + self.radius >= settings.screen_width:
+                    self.speed_x = -self.speed_x
 
         if self.y <= self.radius or \
-            self.y + self.radius >= settings.screen_height:
-            self.speed_y = -self.speed_y
+                self.y + self.radius >= settings.screen_height:
+                    self.speed_y = -self.speed_y

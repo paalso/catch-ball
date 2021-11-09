@@ -34,17 +34,18 @@ class Ring(Ball):
     def __init__(self, screen):
         super().__init__(screen)
         self.radius = random.randint(settings.min_radius, settings.max_radius)
-        self.inner_radius = round(self.radius * \
-                get_float_random_range(
-                        settings.min_inner_radius_factor,
-                        settings.max_inner_radius_factor))
+        self.inner_radius = round(self.radius *
+                                  get_float_random_range(
+                                    settings.min_inner_radius_factor,
+                                    settings.max_inner_radius_factor))
         self.frames_counter = 0
         self.area_points = Ring.maximum_area / self._area()
 
     def __str__(self):
-        return "Ring: radius: {}, inner radius: {}, speed: {:.1f}, points: {}" \
-                .format(self.radius, self.inner_radius, self.speed, self.points)
-
+        template = \
+                "Ring: radius: {}, inner radius: {}, speed: {:.1f}, points: {}"
+        return template \
+            .format(self.radius, self.inner_radius, self.speed, self.points)
 
     def update(self):
         self.frames_counter += 1
@@ -54,9 +55,9 @@ class Ring(Ball):
         self.y += self.speed_y
 
         self.speed_x += random.randint(-settings.frame_speed_stochastic_change,
-                                        settings.frame_speed_stochastic_change)
+                                       settings.frame_speed_stochastic_change)
         self.speed_y += random.randint(-settings.frame_speed_stochastic_change,
-                                        settings.frame_speed_stochastic_change)
+                                       settings.frame_speed_stochastic_change)
 
         if self.frames_counter == settings.speed_change_frames:
             self.frames_counter = 0
@@ -66,9 +67,9 @@ class Ring(Ball):
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color,
-                            (self.x, self.y), self.radius)
+                           (self.x, self.y), self.radius)
         pygame.draw.circle(self.screen, settings.bg_color,
-                            (self.x, self.y), self.inner_radius)
+                           (self.x, self.y), self.inner_radius)
 
     def is_hit(self, hit_pos):
         return self.inner_radius <= self._dist(hit_pos) <= self.radius
@@ -78,8 +79,8 @@ class Ring(Ball):
 
     def __update_points(self):
         self._recalculate_speed()
-        self.points =  round(self.area_points + \
-                ((self.speed / settings.min_speed) ** 0.5))
+        self.points = round(self.area_points +
+                            ((self.speed / settings.min_speed) ** 0.5))
 
     def __process_wall_collisions(self):
         if self.x <= self.radius:
@@ -91,7 +92,7 @@ class Ring(Ball):
         if self.y <= self.radius:
             self.__inverse_speed_y()
             self.y = self.radius
-        elif self.y >= settings.screen_height - self.radius :
+        elif self.y >= settings.screen_height - self.radius:
             self.__inverse_speed_y()
             self.y = settings.screen_height - self.radius
 
@@ -109,4 +110,4 @@ class Ring(Ball):
     def __inverse_speed_y(self):
         self.speed_x = self._generate_random_speed()
         self.speed_y = -abs(self._generate_random_speed()) * \
-                        non_zeroize(sgn(self.speed_y))
+            non_zeroize(sgn(self.speed_y))

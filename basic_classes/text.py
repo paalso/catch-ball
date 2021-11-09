@@ -3,13 +3,16 @@ import pygame
 
 class Text():   # GameObject ?
 
-    def __init__(self, screen, text, x, y, color, font_size):
+    def __init__(self, screen, text, x, y, color, font_size, font_family=None):
         self.x = x
         self.y = y
         self.screen = screen
         self.text = text
         self.color = color
-        self.font = pygame.font.SysFont(None, font_size)
+        try:
+            self.font = pygame.font.SysFont(font_family, font_size)
+        except:
+            self.font = pygame.font.SysFont(None, font_size)
 
     def draw(self):
         text_lines = self.text.split("\n")

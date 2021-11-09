@@ -8,6 +8,7 @@ from ring import Ring
 
 SPECIES = ["Ball", "Ring"]
 
+
 class MovingItems(GameGroupObject):
 
     def __init__(self, screen, game_stats):
@@ -18,7 +19,7 @@ class MovingItems(GameGroupObject):
 
     def update(self):
         self.frames_counter += 1
-##        random.shuffle(self.items)
+        # random.shuffle(self.items)
         super().update()
 
         if self.frames_counter == settings.creation_new_item_frames:

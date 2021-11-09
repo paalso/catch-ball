@@ -12,7 +12,7 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((settings.screen_width,
-                                        settings.screen_height))
+                                      settings.screen_height))
 
     menu = pygame_menu.Menu('Cath a ball!',
                             settings.menu_width, settings.menu_height,

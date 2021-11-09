@@ -9,10 +9,11 @@ EMPTY_COLOR = (0, 0, 0)
 text_sector_start = 0.40
 text_sector_len = 1 - text_sector_start
 
+
 class InfoPanel(GameRectObject):   # GameObject ?
     def __init__(self, screen, game_stats):
         super().__init__(screen, 0, 0,
-                        settings.screen_width, settings.info_text_size * 3)
+                         settings.screen_width, settings.info_text_size * 3)
         self.stats = game_stats
         self.clicks = -1
         self.cought = -1
@@ -24,11 +25,11 @@ class InfoPanel(GameRectObject):   # GameObject ?
         # для экономии ресурсов: чтобы не переформировывать изображение
         # Info Panel, если ее текстовое содержание не изменилось
         if self.clicks == self.stats.clicks and \
-            self.seconds_left == self.stats.seconds_left and \
-            self.items_left == self.stats.items_left and \
-            self.cought == self.stats.cought and \
-            self.score == self.stats.score:
-            return
+                self.seconds_left == self.stats.seconds_left and \
+                self.items_left == self.stats.items_left and \
+                self.cought == self.stats.cought and \
+                self.score == self.stats.score:
+                    return
 
         self.clicks = self.stats.clicks
         self.seconds_left = self.stats.seconds_left

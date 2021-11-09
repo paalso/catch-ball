@@ -3,7 +3,7 @@ import basic_classes.colors as colors
 
 # Screen Settings
 FPS = 30
-screen_width = 1200
+screen_width = 1000
 screen_height = int(screen_width / 1.5)
 menu_width, menu_height = 400, 300
 bg_color = colors.DARK_GREY
@@ -22,25 +22,27 @@ endgame_sounds = {
 }
 endgame_msgs = {
     "win":
-        "You've won!\n" + \
-        "Your final score is {}\n" + \
+        "Congratulations, {}!\n" +
+        "You've won!\n" +
+        "Your final score is {}\n" +
         "You are awesome!",
     "fail":
-        "You've failed!\n" + \
-        "Your final score is {}\n" + \
+        "Alas, {} :(\n"
+        "You've failed!\n" +
+        "Your final score is {}\n" +
         "Goodbye, loser!",
 
 }
 endgame_delay = 7000    # in milliseconds
-# msg_font = None
 endgame_msg_position = \
         0.05 * screen_width, 0.05 * screen_height,
-endgame_msg_size = int(0.07 * screen_height)
+endgame_msg_fontsize = int(0.07 * screen_height)
+results_records_fontsize = int(0.03 * screen_width)
 endgame_msg_color = colors.BROWN
 
 # Game Settings
-game_duration = 20  # in seconds
-start_moving_items = 10
+game_duration = 30  # in seconds
+start_moving_items = 12
 max_moving_items = 200
 finish_early_bonus_factor = 1.2
 extra_click_cost = 1
@@ -48,12 +50,12 @@ extra_click_cost = 1
 # Ball Settings
 min_radius = 30
 max_radius = 100
-min_speed = 1
-max_speed = 8
+min_speed = 2
+max_speed = 12
 pop_sound = pathlib.Path("assets", "pop.mp3")
 
 _creation_new_item_interval = 2   # in seconds
-creation_new_item_frames = _creation_new_item_interval * FPS # in frames
+creation_new_item_frames = _creation_new_item_interval * FPS  # in frames
 
 # Ring Settings
 min_inner_radius_factor = 0.25

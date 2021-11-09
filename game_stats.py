@@ -1,4 +1,6 @@
-import os, csv, time
+import os
+import csv
+import time
 import pygame
 import settings
 
@@ -20,9 +22,9 @@ class GameStats:
     def write_new_record(file_name, data):
         if not os.path.exists(file_name):
             with open(file_name, "w") as f:
-                print("name,game_score,game_date",file=f)
+                print("name,game_score,game_date", file=f)
         with open(file_name, "a", encoding="utf-8") as f:
-            print(",".join(map(str, data)),file=f)
+            print(",".join(map(str, data)), file=f)
 
     @staticmethod
     def sort_records_decreasing(file_name, key):
@@ -47,6 +49,7 @@ class GameStats:
 
         textlines_header = \
             "The best results:\n" + \
+            "=================\n\n" + \
             "       Name         Score         Date\n"
         textlines = []
         for record in records:
@@ -54,8 +57,7 @@ class GameStats:
 
             # format specifiers values are hardcoded, desirable TO FIX
             textlines.append(
-                    "{:<20}{:>4}{:>20}".format(
-                    ellipsis_string(name), *rest))
+                    "{:<20}{:>4}{:>20}".format(ellipsis_string(name), *rest))
         return textlines_header + "\n".join(textlines)
 
     def __init__(self, player_name):
@@ -76,8 +78,8 @@ class GameStats:
     @property
     def final_score(self):
         score_per_second = self.score / self.seconds_passed
-        return int(self.score + settings.finish_early_bonus_factor * \
-                            score_per_second * self.seconds_left)
+        return int(self.score + settings.finish_early_bonus_factor *
+                   score_per_second * self.seconds_left)
 
     def inc_clicks(self):
         self.clicks += 1
@@ -95,8 +97,12 @@ class GameStats:
         self.current_ticks = pygame.time.get_ticks()
 
     def upd_game_results_records(self):
-        GameStats.write_new_record(self.game_results_file,
-                            (self.player_name, self.final_score,
-                            time.strftime("%Y-%m-%d %H:%M")))
+        GameStats.write_new_record(
+                self.game_results_file,
+                (self.player_name, self.final_score,
+                 time.strftime("%Y-%m-%d %H:%M")))
         GameStats.sort_records_decreasing(self.game_results_file, "game_score")
         print(GameStats.generate_records_textlines(self.game_results_file))
+
+    def get_results_records(self):
+        return GameStats.generate_records_textlines(self.game_results_file)
