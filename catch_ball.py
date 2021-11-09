@@ -25,7 +25,7 @@ class CatchBall():
             (settings.screen_width, settings.screen_height))
         self.clock = pygame.time.Clock()
 
-        self.stats = GameStats()
+        self.stats = GameStats(self.player_name)
         self.moving_items = MovingItems(self.screen, self.stats)
         self.info_panel = InfoPanel(self.screen, self.stats)
 
@@ -82,8 +82,9 @@ class CatchBall():
         print(goodbye_msg)
         Text(self.screen, goodbye_msg, *settings.endgame_msg_position,
                 settings.endgame_msg_color, settings.endgame_msg_size).draw()
+        self.stats.upd_game_results_records()
         pygame.display.update()
-        pygame.time.delay(settings.endgame_delay)
+        pygame.time.wait(settings.endgame_delay)
         self.__exit_game()
 
     def __exit_game(self):

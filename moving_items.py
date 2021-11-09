@@ -29,12 +29,18 @@ class MovingItems(GameGroupObject):
         self.stats.inc_clicks()
         if event.type != pygame.MOUSEBUTTONDOWN:
             return
+
+        # fine for extra clicks
+        self.stats.inc_score(-settings.extra_click_cost)
+
         for item in self.items:
             if item.is_hit(event.pos):
                 self.items.remove(item)
                 self.stats.upd_items_left(-1)
+                self.stats.inc_score(settings.extra_click_cost)
                 self.stats.inc_score(item.points)
                 self.stats.inc_cought()
+                print("Caught {}".format(item))
                 pygame.mixer.Sound(settings.pop_sound).play()
                 del(item)       # ?
 

@@ -25,16 +25,26 @@ def stochasticize_speed(x, dx, min_x, max_x):
     return x
 
 
+def get_float_random_range(x, y):
+    return x + random.random() * (y - x)
+
+
 class Ring(Ball):
+
     def __init__(self, screen):
         super().__init__(screen)
         self.radius = random.randint(settings.min_radius, settings.max_radius)
-        self.inner_radius = round(self.radius * settings.inner_radius_quotient)
+        self.inner_radius = round(self.radius * \
+                get_float_random_range(
+                        settings.min_inner_radius_factor,
+                        settings.max_inner_radius_factor))
         self.frames_counter = 0
-        # self.point = self._calculate_point()
+        self.area_points = Ring.maximum_area / self._area()
 
     def __str__(self):
-        return "Ring: {}, {}".format(self.radius, self.points)
+        return "Ring: radius: {}, inner radius: {}, speed: {:.1f}, points: {}" \
+                .format(self.radius, self.inner_radius, self.speed, self.points)
+
 
     def update(self):
         self.frames_counter += 1
@@ -52,7 +62,7 @@ class Ring(Ball):
             self.frames_counter = 0
             self.__randomize_speed()
 
-        self._update_points()
+        self.__update_points()
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color,
@@ -62,6 +72,14 @@ class Ring(Ball):
 
     def is_hit(self, hit_pos):
         return self.inner_radius <= self._dist(hit_pos) <= self.radius
+
+    def _area(self):
+        return super()._area() - self.inner_radius ** 2
+
+    def __update_points(self):
+        self._recalculate_speed()
+        self.points =  round(self.area_points + \
+                ((self.speed / settings.min_speed) ** 0.5))
 
     def __process_wall_collisions(self):
         if self.x <= self.radius:
@@ -77,12 +95,7 @@ class Ring(Ball):
             self.__inverse_speed_y()
             self.y = settings.screen_height - self.radius
 
-        self._update_points()
-
-    def _update_points(self):
-        self._recalculate_speed()
-        self.points = round((settings.max_radius / self.radius) ** 2 + \
-                    (self.speed / settings.min_speed) ** 0.5)
+        self.__update_points()
 
     def __randomize_speed(self):
         self.speed_x = self._generate_random_speed()
@@ -97,4 +110,3 @@ class Ring(Ball):
         self.speed_x = self._generate_random_speed()
         self.speed_y = -abs(self._generate_random_speed()) * \
                         non_zeroize(sgn(self.speed_y))
-
