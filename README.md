@@ -16,6 +16,8 @@ Launch the game:
 puthon3 run.py
 ```
 
+[![Watch the video]](https://www.youtube.com/watch?v=6yr6O_e4-Uo)
+
 
 https://pygame-menu.readthedocs.io/en/4.1.6/
 
