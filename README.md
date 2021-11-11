@@ -1,6 +1,24 @@
 # catch-ball
 ### Catch the ball game
 
+
+The game is implemented using the [Pygame](https://en.wikipedia.org/wiki/Pygame) platform,
+so its launch requires [installation of this library](https://www.pygame.org/wiki/GettingStarted)
+as well as [the pygame-menu library](https://pygame-menu.readthedocs.io/en/4.1.6/):
+
+```bash
+python3 -m pip install -U pygame --user
+python3 -m pip install -U pygame-menu --user
+```
+
+Launch the game:
+```bash
+puthon3 run.py
+```
+
+
+https://pygame-menu.readthedocs.io/en/4.1.6/
+
 Игра реализуется как практическое задание по курсу
 
 [Практика программирования на Python 2020](https://www.youtube.com/playlist?list=PLolqo5ko7kbnGGmzGrCoDW0H1Xq-Vk6Oz):
@@ -15,7 +33,7 @@
 
 - **Сделать код читабельным и документированным.**
 
-Не сделано
+Не сделано ибо лень
 
 - **Реализовать подсчёт очков.**
 
@@ -33,3 +51,5 @@
 Колечки движутся хаотично: постоянно немножко меняют скорость и направление, раз в единицу времени (2 секунды) меняют направление и скорость совершенно произволным образом, аналогично при отражении от стенок.
 
 - **Сделать таблицу лучших игроков, авматически сохраняющуюся в файл.**
+
+Сделано
